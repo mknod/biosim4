@@ -27,7 +27,7 @@
 
     {
 
-    packages = {
+    package.x86_64-linux.default = {
       default = nixpkgs.ffmpeg;
     };
 
