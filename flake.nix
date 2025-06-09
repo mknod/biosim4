@@ -18,6 +18,7 @@
       };
     apps = {
       default = {
+        inherit (self.packages.x86_64-linux.default) name;
         type = "app";
         program = "biosim4";
       };
