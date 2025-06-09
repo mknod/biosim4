@@ -37,8 +37,8 @@
 
         apps = {
           biosim4 = {
-            type = "app";
-            program = "${self}/bin/biosim4";
+          type = "app";
+          program = "${pkgs.stdenv.mkDerivation}/bin/biosim4";
           };
         };
       }
