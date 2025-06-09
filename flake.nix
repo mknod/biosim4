@@ -6,8 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
- 
- outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -15,6 +14,16 @@
           ps.opencv4
         ]);
       in {
+        stdenv.mkDerivation = {
+          name = "biosim4";
+          src = self;
+          buildPhase = "make";
+          installPhase = ''
+            mkdir -p $out/bin
+            cp src/biosim4 $out/bin/biosim4
+          '';
+        };
+
         devShell = pkgs.mkShell {
           buildInputs = [
             python-with-opencv
@@ -24,11 +33,13 @@
             pkgs.cmake
             pkgs.cimg
           ];
+        };
 
-          shellHook = ''
-            export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH
-            echo "Python environment ready with OpenCV $(python -c 'import cv2; print(cv2.__version__)')"
-          '';
+        apps = {
+          biosim4 = {
+            type = "app";
+            program = "${self}/bin/biosim4";
+          };
         };
       }
     );
