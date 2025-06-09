@@ -63,7 +63,7 @@ void ParamManager::setDefaults()
     privParams.updateGraphLogStride = privParams.videoStride;
     privParams.deterministic = false;
     privParams.RNGSeed = 12345678;
-    privParams.graphLogUpdateCommand = "/usr/bin/gnuplot --persist ./tools/graphlog.gp";
+    privParams.graphLogUpdateCommand = "/usr/bin/env -S gnuplot --persist ./tools/graphlog.gp";
     privParams.parameterChangeGenerationNumber = 0;
 }
 
@@ -295,7 +295,7 @@ void ParamManager::updateFromConfigFile(unsigned generationNumber)
                 }
                 else if (activeFromGeneration == generationNumber) {
                     // Parameter value became active at exactly this generation number
-                    privParams.parameterChangeGenerationNumber = generationNumber; 
+                    privParams.parameterChangeGenerationNumber = generationNumber;
                 }
                 name = name.substr(0, generationDelimiterPos);
             }

@@ -1,4 +1,4 @@
-#!/usr/bin/gnuplot --persist
+#!/usr/bin/env -S gnuplot --persist
 
 # Requires a text file named "epoch-log.txt" in the log directory
 

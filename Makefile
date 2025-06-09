@@ -11,6 +11,7 @@ CXXFLAGS += \
   -std=c++17 \
   -fexceptions \
   -fopenmp \
+  -fPIE \
   $(shell pkg-config --cflags opencv4)
 
 LDFLAGS += \
@@ -19,7 +20,8 @@ LDFLAGS += \
   -lopencv_videoio \
   -lgomp \
   -lpthread \
-  -fopenmp
+  -fopenmp \
+  -pie
 
 ifeq ($(BUILD),debug)
   OUT_DIR = bin/Debug/
@@ -49,7 +51,7 @@ before_release:
 	test -d bin/Release || mkdir -p bin/Release
 	test -d obj/Release/src || mkdir -p obj/Release/src
 
-.PHONY : release debug    
+.PHONY : release debug
 debug: before_debug
 	@$(MAKE) --no-print-directory bin/Debug/biosim4 BUILD=$@
 

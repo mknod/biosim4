@@ -19,8 +19,8 @@ RUN apt-get update && apt-get install -yqq \
 	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-RUN useradd -ms /bin/bash darwin
-USER darwin
+#RUN useradd -ms /bin/bash ubuntu
+USER ubuntu
 
 # Runs "/usr/bin/dumb-init -- /my/script --with --args"
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]

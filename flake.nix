@@ -16,6 +16,12 @@
         src = self;
         installPhase = "mkdir -p $out/bin; install -t $out/bin biosim4";
       };
+    apps = {
+      default = {
+        type = "app";
+        program = "biosim4";
+      };
+    };
 
   };
 }
