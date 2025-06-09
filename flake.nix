@@ -1,48 +1,21 @@
 {
-  description = "BioSim Development Shell";
+  description = "Biosim4 Nix Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        python-with-opencv = pkgs.python3.withPackages (ps: [
-          ps.opencv4
-        ]);
-      in {
-        stdenv.mkDerivation = {
-          name = "biosim4";
-          src = self;
-          buildPhase = "make";
-          installPhase = ''
-            mkdir -p $out/bin
-            cp src/biosim4 $out/bin/biosim4
-          '';
-        };
+  outputs = { self, nixpkgs }: {
 
-        devShell = pkgs.mkShell {
-          buildInputs = [
-            python-with-opencv
-            pkgs.pkg-config
-            pkgs.stdenv.cc.cc.lib
-            pkgs.gnuplot
-            pkgs.cmake
-            pkgs.cimg
-          ];
-        };
+    packages.x86_64-linux.default = 
+      with import nixpkgs {
+        system = "x86_64-linux";
+      };
+    stdenv.mkDerivation {
+        name = "biosim4";
+        src = self;
+        installPhase = "mkdir -p $out/bin; install -t $out/bin biosim4";
+      };
 
-        apps = {
-          biosim4 = {
-          type = "app";
-          program = "${pkgs.stdenv.mkDerivation}/bin/biosim4";
-          };
-        };
-                defaultApp = apps.biosim4; # Add this line
-
-      }
-    );
+  };
 }
