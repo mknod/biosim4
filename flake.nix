@@ -54,6 +54,7 @@
           
         ];
         installPhase = ''
+            mkdir -p $out/images
             mkdir -p $out/bin
             cp src/biosim4 $out/bin/biosim4
           '';
