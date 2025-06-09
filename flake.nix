@@ -41,6 +41,8 @@
           program = "${pkgs.stdenv.mkDerivation}/bin/biosim4";
           };
         };
+                defaultApp = apps.biosim4; # Add this line
+
       }
     );
 }
